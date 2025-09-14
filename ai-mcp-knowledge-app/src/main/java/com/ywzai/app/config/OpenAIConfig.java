@@ -1,5 +1,10 @@
 package com.ywzai.app.config;
 
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.DefaultChatClientBuilder;
+import org.springframework.ai.chat.client.observation.ChatClientObservationConvention;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
@@ -27,7 +32,7 @@ public class OpenAIConfig {
                 .build();
     }
 
-    @Bean("openAiSimpleVectorStore")
+    @Bean(name = "openAiSimpleVectorStore")
     public SimpleVectorStore vectorStore(OpenAiApi openAiApi) {
         OpenAiEmbeddingModel embeddingModel = new OpenAiEmbeddingModel(openAiApi);
         return SimpleVectorStore.builder(embeddingModel).build();
@@ -47,7 +52,7 @@ public class OpenAIConfig {
      *
      * SELECT * FROM vector_store_openai
      */
-    @Bean("openAiPgVectorStore")
+    @Bean(name = "openAiPgVectorStore")
     public PgVectorStore pgVectorStore(OpenAiApi openAiApi, JdbcTemplate jdbcTemplate) {
         OpenAiEmbeddingModel embeddingModel = new OpenAiEmbeddingModel(openAiApi);
         return PgVectorStore.builder(jdbcTemplate, embeddingModel)
@@ -55,4 +60,8 @@ public class OpenAIConfig {
                 .build();
     }
 
+    @Bean
+    public ChatClient.Builder chatClientBuilder(OpenAiChatModel openAiChatModel) {
+        return new DefaultChatClientBuilder(openAiChatModel, ObservationRegistry.NOOP, (ChatClientObservationConvention) null);
+    }
 }

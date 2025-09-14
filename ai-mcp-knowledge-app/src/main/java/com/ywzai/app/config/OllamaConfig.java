@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class OllamaConfig {
 
-    @Bean("ollamaSimpleVectorStore")
+    @Bean(name = "ollamaSimpleVectorStore")
     public SimpleVectorStore vectorStore(OllamaApi ollamaApi) {
         OllamaEmbeddingModel embeddingModel = OllamaEmbeddingModel
                 .builder()
@@ -36,7 +36,7 @@ public class OllamaConfig {
      *
      * SELECT * FROM vector_store_ollama_deepseek
      */
-    @Bean("ollamaPgVectorStore")
+    @Bean(name = "ollamaPgVectorStore")
     public PgVectorStore pgVectorStore(OllamaApi ollamaApi, JdbcTemplate jdbcTemplate) {
         OllamaEmbeddingModel embeddingModel = OllamaEmbeddingModel
                 .builder()
