@@ -3,7 +3,10 @@ package com.ywzai.app.config;
 import io.micrometer.observation.ObservationRegistry;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.DefaultChatClientBuilder;
+import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.client.observation.ChatClientObservationConvention;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
@@ -64,14 +67,20 @@ public class OpenAIConfig {
 
 
     @Bean
-    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel, ToolCallbackProvider tools){
+    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel, ToolCallbackProvider tools, ChatMemory chatMemory){
         DefaultChatClientBuilder defaultChatClientBuilder = new DefaultChatClientBuilder(openAiChatModel, ObservationRegistry.NOOP, (ChatClientObservationConvention) null);
         return defaultChatClientBuilder
                 .defaultTools(tools)
                 .defaultOptions(OpenAiChatOptions.builder()
                         .model("qwen-max")
                         .build())
+                .defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory))
                 .build();
+    }
+
+    @Bean
+    public ChatMemory chatMemory() {
+        return new InMemoryChatMemory();
     }
 
 }
