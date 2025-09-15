@@ -41,3 +41,9 @@ build/
 /ai-mcp-knowledge-app/src/main/resources/
 /ai-mcp-knowledge-app/mcp-server-computer.log
 /ai-mcp-knowledge-app/data/
+/ai-mcp-knowledge-app/src/build.sh
+/ai-mcp-knowledge-app/src/Dockerfile
+/ai-mcp-knowledge-app/src/push.sh
+/ai-mcp-knowledge-app/build.sh
+/ai-mcp-knowledge-app/Dockerfile
+/ai-mcp-knowledge-app/push.sh
