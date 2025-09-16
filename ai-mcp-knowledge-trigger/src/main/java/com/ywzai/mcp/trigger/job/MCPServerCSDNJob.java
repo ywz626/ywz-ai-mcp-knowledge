@@ -64,6 +64,7 @@ public class MCPServerCSDNJob {
                     根据以上内容，不要阐述其他信息，请直接提供；文章标题（需要含带技术点）、文章内容、文章标签（多个用英文逗号隔开）、文章简述（100字）
                                     
                     将以上内容发布文章到CSDN
+                    之后进行，微信公众号消息通知，平台：CSDN、主题：为文章标题、描述：为文章简述、跳转地址：为发布文章到CSDN获取 http url 文章地址
                     """;
             log.info("执行结果:{},{}",userInput,chatClient.prompt(userInput).call().content());
         }catch (Exception e){
