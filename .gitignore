@@ -50,3 +50,4 @@ build/
 /ai-mcp-knowledge-app/build.sh
 /ai-mcp-knowledge-app/Dockerfile
 /ai-mcp-knowledge-app/push.sh
+/data/
